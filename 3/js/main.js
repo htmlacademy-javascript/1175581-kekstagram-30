@@ -1,9 +1,5 @@
 const MAX_PHOTO_POSTS = 25;
 
-const createCommentId = generateCommentId();
-
-const createId = generateId();
-
 const DESCRIPTIONS = [
   'Будь таким человеком, с которым мечтаешь встретиться',
   'Будьте героями своих собственных историй',
@@ -103,6 +99,11 @@ const generateCommentId = () => {
     return id;
   };
 };
+
+const createCommentId = generateCommentId();
+
+const createId = generateId();
+
 //Создаем массив обьектов с описанием фотографии
 const photoPostArray = Array.from({length: MAX_PHOTO_POSTS}, createPhotoPost);
 

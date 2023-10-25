@@ -1,6 +1,3 @@
 //Точка входа
+import './thumbnails.js';
 
-import { createPhotoPostArray } from './data.js';
-
-//Создаем массив обьектов с описанием фотографии
-console.log(createPhotoPostArray());

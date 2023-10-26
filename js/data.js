@@ -1,6 +1,6 @@
 // Модуль с данными для фотографий
 import { getRandomArrayElement, getRandomInteger } from './util';
-import {DESCRIPTIONS, MESSAGES, NAMES, } from './constants.js';
+import { DESCRIPTIONS, MESSAGES, NAMES, } from './constants.js';
 
 let photoCount;
 //Функция для создания обьекта с описанием фотографии
@@ -53,7 +53,7 @@ const createPhotoPostArray = (n) => {
   photoCount = n;
   return Array.from({ length: photoCount }, createPhotoPost);
 
-}
+};
 
 
 export { createPhotoPostArray };

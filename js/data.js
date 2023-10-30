@@ -1,6 +1,6 @@
 // Модуль с данными для фотографий
 import { getRandomArrayElement, getRandomInteger } from './util';
-import { DESCRIPTIONS, MESSAGES, NAMES, } from './constants.js';
+import { DESCRIPTIONS, MESSAGES, NAMES, MAX_PHOTO_POSTS } from './constants.js';
 
 let photoCount;
 //Функция для создания обьекта с описанием фотографии
@@ -55,5 +55,7 @@ const createPhotoPostArray = (n) => {
 
 };
 
+//создаем массив с фотографиями при помощи вызова ранее созданнной функции
+const photoPostArray = createPhotoPostArray(MAX_PHOTO_POSTS);
 
-export { createPhotoPostArray };
+export { createPhotoPostArray, photoPostArray };

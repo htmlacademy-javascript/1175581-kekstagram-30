@@ -1,79 +1,69 @@
-import { photoPostArray } from './data.js';
+import { hideLoadButton, showLoadButton, showModal, hideModal, removeComments } from './modal-helpers.js';
+import {createComment, commentsBlock, commentsFragment, renderData, modal, modalShownCommentsCount, totalCommentsCount} from './modal-data.js';
 import {COMMENTS_TO_SHOW} from './constants.js';
-const picturesList = document.querySelector('.pictures');
-const modal = document.querySelector('.big-picture');
 const closeModalButton = modal.querySelector('.big-picture__cancel');
-const modalImgblock = modal.querySelector('.big-picture__img');
-const modalImg = modalImgblock.querySelector('img');
-const modalLikesCount = modal.querySelector('.likes-count');
-const modalDescription = modal.querySelector('.social__caption');
-const modalShownCommentsCount = modal.querySelector('.social__comment-shown-count');
-const modalAllComments = modal.querySelector('.social__comment-total-count');
 const loadCommentsButtton = modal.querySelector('.social__comments-loader');
 
-//функция очистки комментариев
-const removeComments = () => {
-  document.querySelectorAll('.social__comment').forEach((comment) => {
-    comment.remove();
+let showCommentsCount = 0;
+let showComments = [];
+
+const openModal = () => {
+  showModal(modal);
+  document.addEventListener('keydown', onModalEscKeydown);
+};
+
+const resetCommentsCount = () => {
+  showCommentsCount = 0;
+  showComments.length = 0;
+};
+
+const closeModal = () => {
+  hideModal(modal);
+  removeEscListener();
+  resetCommentsCount();
+};
+
+const renderComments = () => {
+  showComments.splice(0, COMMENTS_TO_SHOW).forEach((showComment) => {
+    createComment(showComment);
+    commentsFragment.appendChild(createComment(showComment));
+    showCommentsCount++;
   });
-};
-// Функция для ренденрига комментариев
-const renderComments = (commentsArray) => {
-  let showCommentsCount = 0;
-  const commentsBlock = document.querySelector('.social__comments');
-  const comment = document.querySelector('#comment').content;
-  const commentTemplate = comment.querySelector('li');
-  const commentsFragment = document.createDocumentFragment();
-
-  return function () {
-    const showCommentsArray = commentsArray.splice(0, COMMENTS_TO_SHOW);
-    showCommentsArray.forEach((showComment) => {
-      const commentElement = commentTemplate.cloneNode(true);
-      const commentElementImg = commentElement.querySelector('.social__picture');
-      commentElementImg.src = showComment.avatar;
-      commentElementImg.alt = showComment.name;
-      commentElement.querySelector('.social__text').textContent = showComment.message;
-      commentsFragment.appendChild(commentElement);
-      showCommentsCount ++;
-    });
-    modalShownCommentsCount.textContent = showCommentsCount;
-    commentsBlock.appendChild(commentsFragment);
-  };
-};
-
-//функция для обработчика закрытия клавишей ESC
-const onModalEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    modal.classList.add('hidden');
+  modalShownCommentsCount.textContent = showCommentsCount;
+  commentsBlock.appendChild(commentsFragment);
+  if (totalCommentsCount <= showCommentsCount) {
+    hideLoadButton(loadCommentsButtton);
+  } else {
+    showLoadButton(loadCommentsButtton);
   }
 };
-//закрытие модального окна
-closeModalButton.addEventListener('click', () => {
-  modal.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onModalEscKeydown);
-});
 
-
-//открытие модального окна при клике на миниатюру и рендеринг комментариев
-picturesList.addEventListener('click', (evt) => {
-  modal.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  const photo = evt.target.parentElement;
-  photoPostArray.forEach((photoPost) => {
+const renderModal = (evt, postArray) => {
+  const photo = evt.target.closest('.picture');
+  postArray.forEach((photoPost) => {
     if (parseInt(photo.dataset.id, 10) === photoPost.id) {
+      openModal();
       removeComments();
-      modalImg.src = photoPost.url;
-      modalShownCommentsCount.textContent = photoPost.comments.length;
-      modalLikesCount.textContent = photoPost.likes;
-      modalAllComments.textContent = photoPost.comments.length;
-      modalDescription.textContent = photoPost.description;
-      const showCommentsArray = photoPost.comments.slice();
-      const render = renderComments(showCommentsArray);
-      render();
-      loadCommentsButtton.addEventListener('click', () => { render() });
+      renderData(photoPost);
+      showComments = structuredClone(photoPost.comments);
+      renderComments();
     }
   });
-  document.addEventListener('keydown', onModalEscKeydown);
-});
+};
+
+loadCommentsButtton.addEventListener('click', () => renderComments(showComments));
+
+closeModalButton.addEventListener('click', () => closeModal());
+
+function onModalEscKeydown (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeModal();
+  }
+}
+
+function removeEscListener() {
+  document.removeEventListener('keydown', onModalEscKeydown);
+}
+
+export { renderModal };

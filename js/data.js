@@ -55,7 +55,7 @@ const createPhotoPostArray = (n) => {
 
 };
 
-//создаем массив с фотографиями при помощи вызова ранее созданнной функции
-const photoPostArray = createPhotoPostArray(MAX_PHOTO_POSTS);
+// //создаем массив с фотографиями при помощи вызова ранее созданнной функции
+// const photoPostArray = createPhotoPostArray(MAX_PHOTO_POSTS);
 
-export { createPhotoPostArray, photoPostArray };
+export { createPhotoPostArray };

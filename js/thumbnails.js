@@ -1,4 +1,4 @@
-import './modal-photo.js';
+import { renderModal } from './modal-photo';
 //находим dom елемент блока куда будем добавлять фотографии
 const picturesList = document.querySelector('.pictures');
 
@@ -16,7 +16,7 @@ const removeCards = () => {
 };
 
 const renderPhotoPosts = (postArray) => {
-  postArray.forEach(({ id , url, description, likes, comments }) => {
+  postArray.forEach(({ id, url, description, likes, comments }) => {
     removeCards();
     const photoElement = pictureTemplate.cloneNode(true);
     photoElement.dataset.id = id;
@@ -24,14 +24,11 @@ const renderPhotoPosts = (postArray) => {
     photoElement.querySelector('.picture__img').alt = description;
     photoElement.querySelector('.picture__likes').textContent = likes;
     photoElement.querySelector('.picture__comments').textContent = comments.length;
-    // photoElement.comments = comments;
-    // photoElement.description = description;
-    // photoElement.url = url;
-    // photoElement.likes = likes;
     picturesListFragment.appendChild(photoElement);
   });
-
   picturesList.appendChild(picturesListFragment);
+  picturesList.addEventListener('click', (evt) => renderModal(evt, postArray));
+
 };
 
-export {renderPhotoPosts};
+export { renderPhotoPosts };

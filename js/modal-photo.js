@@ -1,46 +1,69 @@
-import './thumbnails.js';
-const picturesList = document.querySelector('.pictures');
-const modal = document.querySelector('.big-picture');
+import { hideLoadButton, showLoadButton, showModal, hideModal, removeComments } from './modal-helpers.js';
+import {createComment, commentsBlock, commentsFragment, renderData, modal, modalShownCommentsCount, totalCommentsCount} from './modal-data.js';
+import {COMMENTS_TO_SHOW} from './constants.js';
 const closeModalButton = modal.querySelector('.big-picture__cancel');
-const modalImgblock = modal.querySelector('.big-picture__img');
-const modalImg = modalImgblock.querySelector('img');
-const modalLikesCount = modal.querySelector('.likes-count');
-const modalDescription = modal.querySelector('.social__caption');
-const modalShownCommentsCount = modal.querySelector('.social__comment-shown-count');
-const modalAllComments = modal.querySelector('.social__comment-total-count');
+const loadCommentsButtton = modal.querySelector('.social__comments-loader');
 
-//открытие модального окна при клике на миниатюру и рендеринг комментариев
-picturesList.addEventListener('click', (evt) => {
-  modal.classList.remove('hidden');
-  const photo = evt.target.parentElement;
-  modalImg.src = photo.url;
-  modalShownCommentsCount.textContent = photo.comments.length;
-  modalLikesCount.textContent = photo.likes;
-  modalAllComments.textContent = photo.comments.length;
-  modalDescription.textContent = photo.description;
-  renderComments(photo.comments);
+let showCommentsCount = 0;
+let showComments = [];
 
-});
-
-//закрытие модального окна
-closeModalButton.addEventListener('click', () => {
-  modal.classList.add('hidden');
-});
-
-//функция для рендеринга комментариев
-const renderComments = (commentsArray) => {
-  const commentsBlock = document.querySelector('.social__comments');
-  commentsBlock.textContent = '';
-  const comment = document.querySelector('#comment').content;
-  const commentTemplate = comment.querySelector('li');
-  const commentsFragment = document.createDocumentFragment();
-  commentsArray.forEach((comment) => {
-    const commentElement = commentTemplate.cloneNode(true);
-    const commentElementImg = commentElement.querySelector('.social__picture');
-    commentElementImg.src = comment.avatar;
-    commentElementImg.alt = comment.name
-    commentElement.querySelector('.social__text').textContent = comment.message;
-    commentsFragment.appendChild(commentElement);
-  });
-  commentsBlock.appendChild(commentsFragment);
+const openModal = () => {
+  showModal(modal);
+  document.addEventListener('keydown', onModalEscKeydown);
 };
+
+const resetCommentsCount = () => {
+  showCommentsCount = 0;
+  showComments.length = 0;
+};
+
+const closeModal = () => {
+  hideModal(modal);
+  removeEscListener();
+  resetCommentsCount();
+};
+
+const renderComments = () => {
+  showComments.splice(0, COMMENTS_TO_SHOW).forEach((showComment) => {
+    createComment(showComment);
+    commentsFragment.appendChild(createComment(showComment));
+    showCommentsCount++;
+  });
+  modalShownCommentsCount.textContent = showCommentsCount;
+  commentsBlock.appendChild(commentsFragment);
+  if (totalCommentsCount <= showCommentsCount) {
+    hideLoadButton(loadCommentsButtton);
+  } else {
+    showLoadButton(loadCommentsButtton);
+  }
+};
+
+const renderModal = (evt, postArray) => {
+  const photo = evt.target.closest('.picture');
+  postArray.forEach((photoPost) => {
+    if (parseInt(photo.dataset.id, 10) === photoPost.id) {
+      openModal();
+      removeComments();
+      renderData(photoPost);
+      showComments = structuredClone(photoPost.comments);
+      renderComments();
+    }
+  });
+};
+
+loadCommentsButtton.addEventListener('click', () => renderComments(showComments));
+
+closeModalButton.addEventListener('click', () => closeModal());
+
+function onModalEscKeydown (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeModal();
+  }
+}
+
+function removeEscListener() {
+  document.removeEventListener('keydown', onModalEscKeydown);
+}
+
+export { renderModal };

@@ -1,3 +1,4 @@
+const COMMENTS_TO_SHOW = 5;
 const MAX_PHOTO_POSTS = 25;
 
 const DESCRIPTIONS = [
@@ -53,5 +54,6 @@ export {
   MAX_PHOTO_POSTS,
   DESCRIPTIONS,
   MESSAGES,
-  NAMES
+  NAMES,
+  COMMENTS_TO_SHOW
 };

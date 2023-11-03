@@ -1,7 +1,4 @@
-import { createPhotoPostArray } from './data.js';
-import { MAX_PHOTO_POSTS } from './constants.js';
-import './modal-photo.js';
-
+import { renderModal } from './modal-photo';
 //находим dom елемент блока куда будем добавлять фотографии
 const picturesList = document.querySelector('.pictures');
 
@@ -9,26 +6,29 @@ const picturesList = document.querySelector('.pictures');
 const picture = document.querySelector('#picture').content;
 const pictureTemplate = picture.querySelector('a');
 
-//создаем массив с фотографиями при помощи вызова ранее созданнной функции
-const photoPostArray = createPhotoPostArray(MAX_PHOTO_POSTS);
-
 //создаем documentFragment
 const picturesListFragment = document.createDocumentFragment();
 
-const renderPhotoPosts = () => {
-  photoPostArray.forEach(({ url, description, likes, comments }) => {
+const removeCards = () => {
+  document.querySelectorAll('.picture').forEach((card) => {
+    card.remove();
+  })
+};
+
+const renderPhotoPosts = (postArray) => {
+  postArray.forEach(({ id, url, description, likes, comments }) => {
+    removeCards();
     const photoElement = pictureTemplate.cloneNode(true);
+    photoElement.dataset.id = id;
     photoElement.querySelector('.picture__img').src = url;
     photoElement.querySelector('.picture__img').alt = description;
     photoElement.querySelector('.picture__likes').textContent = likes;
     photoElement.querySelector('.picture__comments').textContent = comments.length;
-    photoElement.comments = comments;
-    photoElement.description = description;
-    photoElement.url = url;
-    photoElement.likes = likes;
     picturesListFragment.appendChild(photoElement);
   });
-
   picturesList.appendChild(picturesListFragment);
+  picturesList.addEventListener('click', (evt) => renderModal(evt, postArray));
+
 };
-renderPhotoPosts();
+
+export { renderPhotoPosts };

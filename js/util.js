@@ -10,4 +10,5 @@ const getRandomInteger = (a, b) => {
 //Функция для получения элементат массива по индексу
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export { getRandomArrayElement, getRandomInteger };
+
+export { getRandomArrayElement, getRandomInteger};

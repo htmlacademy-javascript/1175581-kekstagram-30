@@ -1,6 +1,6 @@
 const COMMENTS_TO_SHOW = 5;
 const MAX_PHOTO_POSTS = 25;
-
+const COMMENT_IN_FORM_LENGTH = 140;
 const DESCRIPTIONS = [
   'Будь таким человеком, с которым мечтаешь встретиться',
   'Будьте героями своих собственных историй',
@@ -55,5 +55,6 @@ export {
   DESCRIPTIONS,
   MESSAGES,
   NAMES,
-  COMMENTS_TO_SHOW
+  COMMENTS_TO_SHOW,
+  COMMENT_IN_FORM_LENGTH
 };

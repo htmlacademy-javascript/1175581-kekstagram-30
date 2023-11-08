@@ -1,14 +1,14 @@
 import { hideLoadButton, showLoadButton, showModal, hideModal, removeComments } from './modal-helpers.js';
-import {createComment, commentsBlock, commentsFragment, renderData, modal, modalShownCommentsCount, totalCommentsCount} from './modal-data.js';
-import {COMMENTS_TO_SHOW} from './constants.js';
-const closeModalButton = modal.querySelector('.big-picture__cancel');
-const loadCommentsButtton = modal.querySelector('.social__comments-loader');
+import { createComment, commentsBlockElement, commentsFragment, renderData, modalElement, modalShownCommentsElement, totalCommentsCount } from './modal-data.js';
+import { COMMENTS_TO_SHOW } from '../constants.js';
+const closeModalButton = modalElement.querySelector('.big-picture__cancel');
+const loadCommentsButtton = modalElement.querySelector('.social__comments-loader');
 
 let showCommentsCount = 0;
 let showComments = [];
 
 const openModal = () => {
-  showModal(modal);
+  showModal(modalElement);
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
@@ -18,7 +18,7 @@ const resetCommentsCount = () => {
 };
 
 const closeModal = () => {
-  hideModal(modal);
+  hideModal(modalElement);
   removeEscListener();
   resetCommentsCount();
 };
@@ -29,8 +29,8 @@ const renderComments = () => {
     commentsFragment.appendChild(createComment(showComment));
     showCommentsCount++;
   });
-  modalShownCommentsCount.textContent = showCommentsCount;
-  commentsBlock.appendChild(commentsFragment);
+  modalShownCommentsElement.textContent = showCommentsCount;
+  commentsBlockElement.appendChild(commentsFragment);
   if (totalCommentsCount <= showCommentsCount) {
     hideLoadButton(loadCommentsButtton);
   } else {
@@ -41,7 +41,7 @@ const renderComments = () => {
 const renderModal = (evt, postArray) => {
   const photo = evt.target.closest('.picture');
   postArray.forEach((photoPost) => {
-    if (parseInt(photo.dataset.id, 10) === photoPost.id) {
+    if (photo !== null && parseInt(photo.dataset.id, 10) === photoPost.id) {
       openModal();
       removeComments();
       renderData(photoPost);
@@ -51,11 +51,15 @@ const renderModal = (evt, postArray) => {
   });
 };
 
-loadCommentsButtton.addEventListener('click', () => renderComments(showComments));
+const onCloseModalClick = () => {
+  closeModal();
+};
 
-closeModalButton.addEventListener('click', () => closeModal());
+const onLoadButtonClick = () => {
+  renderComments(showComments);
+};
 
-function onModalEscKeydown (evt) {
+function onModalEscKeydown(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeModal();
@@ -65,5 +69,9 @@ function onModalEscKeydown (evt) {
 function removeEscListener() {
   document.removeEventListener('keydown', onModalEscKeydown);
 }
+
+loadCommentsButtton.addEventListener('click', () => onLoadButtonClick());
+
+closeModalButton.addEventListener('click', () => onCloseModalClick());
 
 export { renderModal };

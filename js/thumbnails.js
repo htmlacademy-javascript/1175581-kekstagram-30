@@ -1,10 +1,9 @@
-import { renderModal } from './modal-photo';
+import { renderModal } from './modal/modal-photo.js';
 //находим dom елемент блока куда будем добавлять фотографии
 const picturesList = document.querySelector('.pictures');
 
 //находим элемент шаблона для добавления фото
-const picture = document.querySelector('#picture').content;
-const pictureTemplate = picture.querySelector('a');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('a');
 
 //создаем documentFragment
 const picturesListFragment = document.createDocumentFragment();
@@ -12,7 +11,7 @@ const picturesListFragment = document.createDocumentFragment();
 const removeCards = () => {
   document.querySelectorAll('.picture').forEach((card) => {
     card.remove();
-  })
+  });
 };
 
 const renderPhotoPosts = (postArray) => {

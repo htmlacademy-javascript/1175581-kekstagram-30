@@ -1,6 +1,12 @@
 const COMMENTS_TO_SHOW = 5;
 const MAX_PHOTO_POSTS = 25;
-
+const COMMENT_IN_FORM_LENGTH = 140;
+const HASHTAGS_MAX_COUNT = 5;
+const HASHTAGS_ERRORS = {
+  CORRECT: 'некорректный хэштэг',
+  UNIQUE: 'повторяешься',
+  COUNT: 'их больше пяти',
+};
 const DESCRIPTIONS = [
   'Будь таким человеком, с которым мечтаешь встретиться',
   'Будьте героями своих собственных историй',
@@ -55,5 +61,8 @@ export {
   DESCRIPTIONS,
   MESSAGES,
   NAMES,
-  COMMENTS_TO_SHOW
+  COMMENTS_TO_SHOW,
+  COMMENT_IN_FORM_LENGTH,
+  HASHTAGS_MAX_COUNT,
+  HASHTAGS_ERRORS
 };

@@ -1,6 +1,6 @@
 import { hideLoadButton, showLoadButton, showModal, hideModal, removeComments } from './modal-helpers.js';
 import { createComment, commentsBlockElement, commentsFragment, renderData, modalElement, modalShownCommentsElement, totalCommentsCount } from './modal-data.js';
-import { COMMENTS_TO_SHOW } from './constants.js';
+import { COMMENTS_TO_SHOW } from '../constants.js';
 const closeModalButton = modalElement.querySelector('.big-picture__cancel');
 const loadCommentsButtton = modalElement.querySelector('.social__comments-loader');
 

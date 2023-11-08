@@ -1,5 +1,5 @@
 // Модуль с данными для фотографий
-import { getRandomArrayElement, getRandomInteger } from './util';
+import { getRandomArrayElement, getRandomInteger } from './util.js';
 import { DESCRIPTIONS, MESSAGES, NAMES, MAX_PHOTO_POSTS } from './constants.js';
 
 let photoCount;

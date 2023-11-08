@@ -1,4 +1,4 @@
-import { renderModal } from './modal-photo';
+import { renderModal } from './modal/modal-photo.js';
 //находим dom елемент блока куда будем добавлять фотографии
 const picturesList = document.querySelector('.pictures');
 

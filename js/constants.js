@@ -7,6 +7,80 @@ const HASHTAGS_ERRORS = {
   UNIQUE: 'повторяешься',
   COUNT: 'их больше пяти',
 };
+const COMMENT_ERRORS = {
+  COUNT: 'Не более 140 символов',
+};
+const SCALE_STEP = {
+  PERCENTS: 25,
+  VALUE: 0.25,
+};
+const MAX_SCALE = {
+  PERCENTS: 100,
+  VALUE: 1,
+};
+const MIN_SCALE = {
+  PERCENTS: 25,
+  VALUE: 0.25,
+};
+const DEFOULT_SCALE = {
+  PERCENTS: 100,
+  VALUE: 1,
+};
+const FILTERS = {
+  original: {
+    effect: 'none',
+    effectValue: 0,
+    min: 0,
+    max: 0,
+    step: 0,
+  },
+  chrome: {
+    effect: 'grayscale',
+    effectValue: 1,
+    min: 0,
+    max: 1,
+    step: 0.1,
+  },
+  sepia: {
+    effect: 'sepia',
+    effectValue: 1,
+    min: 0,
+    max: 1,
+    step: 0.1,
+  },
+  marvin: {
+    effect: 'invert',
+    effectValue: 1,
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%',
+  },
+  fobos: {
+    effect: 'blur',
+    effectValue: 1,
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px',
+  },
+  znoy: {
+    effect: 'brightness',
+    effectValue: 1,
+    min: 1,
+    max: 3,
+    step: 0.1,
+  },
+};
+
+const FILTER_INDEX = {
+  0: 'original',
+  1: 'chrome',
+  2: 'sepia',
+  3: 'marvin',
+  4: 'fobos',
+  5: 'znoy',
+};
 const DESCRIPTIONS = [
   'Будь таким человеком, с которым мечтаешь встретиться',
   'Будьте героями своих собственных историй',
@@ -64,5 +138,12 @@ export {
   COMMENTS_TO_SHOW,
   COMMENT_IN_FORM_LENGTH,
   HASHTAGS_MAX_COUNT,
-  HASHTAGS_ERRORS
+  HASHTAGS_ERRORS,
+  SCALE_STEP,
+  MAX_SCALE,
+  MIN_SCALE,
+  DEFOULT_SCALE,
+  COMMENT_ERRORS,
+  FILTERS,
+  FILTER_INDEX
 };

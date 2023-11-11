@@ -26,29 +26,51 @@ const DEFOULT_SCALE = {
   PERCENTS: 100,
   VALUE: 1,
 };
-const FILTERS = {
-  original: {
+
+// const FilterEffects = {
+//   default: 'none',
+//   chrome: 'chrome',
+//   sepia: 'sepia',
+//   marvin: 'marvin',
+//   phobos: 'phobos',
+//   heat: 'heat'
+// };
+
+const FilterEffects = {
+  none: 'None',
+  chrome: 'Chrome',
+  sepia: 'Sepia',
+  marvin: 'Marvin',
+  phobos: 'Phobos',
+  heat: 'Heat'
+};
+
+const Filters = {
+  None: {
     effect: 'none',
     effectValue: 0,
     min: 0,
     max: 0,
     step: 0,
+    unit: '',
   },
-  chrome: {
+  Chrome: {
     effect: 'grayscale',
     effectValue: 1,
     min: 0,
     max: 1,
     step: 0.1,
+    unit: '',
   },
-  sepia: {
+  Sepia: {
     effect: 'sepia',
     effectValue: 1,
     min: 0,
     max: 1,
     step: 0.1,
+    unit: '',
   },
-  marvin: {
+  Marvin: {
     effect: 'invert',
     effectValue: 1,
     min: 0,
@@ -56,7 +78,7 @@ const FILTERS = {
     step: 1,
     unit: '%',
   },
-  fobos: {
+  Phobos: {
     effect: 'blur',
     effectValue: 1,
     min: 0,
@@ -64,23 +86,17 @@ const FILTERS = {
     step: 0.1,
     unit: 'px',
   },
-  znoy: {
+  Heat: {
     effect: 'brightness',
     effectValue: 1,
     min: 1,
     max: 3,
     step: 0.1,
+    unit: '',
   },
 };
 
-const FILTER_INDEX = {
-  0: 'original',
-  1: 'chrome',
-  2: 'sepia',
-  3: 'marvin',
-  4: 'fobos',
-  5: 'znoy',
-};
+
 const DESCRIPTIONS = [
   'Будь таким человеком, с которым мечтаешь встретиться',
   'Будьте героями своих собственных историй',
@@ -144,6 +160,6 @@ export {
   MIN_SCALE,
   DEFOULT_SCALE,
   COMMENT_ERRORS,
-  FILTERS,
-  FILTER_INDEX
+  Filters,
+  FilterEffects
 };

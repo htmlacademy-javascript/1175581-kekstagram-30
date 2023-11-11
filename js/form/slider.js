@@ -1,10 +1,8 @@
-import { FILTERS, FILTER_INDEX } from '../constants';
+import { Filters, FilterEffects } from '../constants';
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectValueElement = document.querySelector('.effect-level__value');
-const previewMiniCollection = document.querySelectorAll('.effects__item');
+const previewMiniList = document.querySelector('.effects__list');
 const previewPhotoElement = document.querySelector('.img-upload__preview img');
-// effectValueElement.style.display = 'block';
-// effectValueElement.style.color = 'black';
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -27,54 +25,54 @@ noUiSlider.create(sliderElement, {
   },
 });
 
-const isOriginalEffect = (index) => {
-  if(index === 0) {
-    sliderElement.classList.add('hidden');
-  }
+const isNoneEffect = (currentEffect) => currentEffect.effect === 'none';
+
+const resetFilters = () => {
+  sliderElement.classList.add('hidden');
+  previewPhotoElement.style.filter = 'none';
+  effectValueElement.checked = true;
 };
 
-const onEffectsClick = (index) => {
-  const currentfilter = FILTERS[FILTER_INDEX[index]];
-  let effectValue = currentfilter.effectValue;
+const sliderUpdate = ({ effect, unit }) => {
   sliderElement.noUiSlider.on('update', () => {
     effectValueElement.value = sliderElement.noUiSlider.get();
-    effectValue = effectValueElement.value;
-    switch (currentfilter.unit) {
-      case '%':
-        effectValue = `${effectValue}%`;
-        break;
-      case 'px':
-        effectValue = `${effectValue}px`;
-        break;
-    }
-    if (index === 0) {
-      previewPhotoElement.style.filter = currentfilter.effect;
-      sliderElement.classList.add('hidden');
-    }
-    else {
-      previewPhotoElement.style.filter = `${currentfilter.effect}(${effectValue})`;
-      sliderElement.classList.remove('hidden');
-    }
+    previewPhotoElement.style.filter = `${effect}(${effectValueElement.value}${unit})`;
   });
 
+};
+
+const sliderUpdateOptions = ({ min, max, step }) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: currentfilter.min,
-      max: currentfilter.max,
+      min: min,
+      max: max,
     },
     start: 100,
-    step: currentfilter.step,
+    step: step,
     connect: 'lower',
   });
+
+};
+const showEffect = ({ effect, effectValue, unit }) => {
+  effectValueElement.value = sliderElement.noUiSlider.get();
+  previewPhotoElement.style.filter = `${effect}(${effectValue}${unit})`;
 };
 
-const getFilterPreview = () => {
-  previewMiniCollection.forEach((previewMini, index) => {
-    isOriginalEffect(index);
-    previewMini.addEventListener('click', () => onEffectsClick(index));
-  });
+const onEffectChange = (evt) => {
+  const currentEffect = Filters[FilterEffects[evt.target.value]];
+  if (isNoneEffect(currentEffect)) {
+    previewPhotoElement.style.filter = 'none';
+    sliderElement.classList.add('hidden');
+  }
+  else {
+    sliderElement.classList.remove('hidden');
+    sliderUpdateOptions(currentEffect);
+    showEffect(currentEffect);
+    sliderUpdate(currentEffect);
+  }
+};
+const renderFilters = () => {
+  previewMiniList.addEventListener('change', onEffectChange);
 };
 
-export { getFilterPreview };
-
-
+export { resetFilters, renderFilters };

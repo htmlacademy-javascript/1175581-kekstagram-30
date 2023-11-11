@@ -53,28 +53,28 @@ pristine.addValidator(
   validateComment,
   COMMENT_ERRORS.COUNT,
   1,
-  false);
+  true);
 
 pristine.addValidator(
   hashInputElement,
   isHashtagsCount,
   HASHTAGS_ERRORS.COUNT,
   3,
-  false);
+  true);
 
 pristine.addValidator(
   hashInputElement,
   isHashtagsUnique,
   HASHTAGS_ERRORS.UNIQUE,
   2,
-  false);
+  true);
 
 pristine.addValidator(
   hashInputElement,
   isHashtagsCorrect,
   HASHTAGS_ERRORS.CORRECT,
   1,
-  false);
+  true);
 
 const isValid = () => pristine.validate();
 

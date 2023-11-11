@@ -1,7 +1,7 @@
 import { isValid, resetData } from './validation.js';
 import { DEFOULT_SCALE } from '../constants.js';
 import { resetToDefault } from './scale.js';
-import { getFilterPreview } from './slider.js';
+import {resetFilters, renderFilters} from './slider.js';
 const fileNameInputElement = document.querySelector('.img-upload__input');
 const editModalElement = document.querySelector('.img-upload__overlay');
 const closeEditModalButton = document.querySelector('.img-upload__cancel');
@@ -9,10 +9,6 @@ const formElement = document.querySelector('.img-upload__form');
 const formPhotoElement = formElement.querySelector('.img-upload__preview img');
 const previewMiniElements = document.querySelectorAll('.effects__preview');
 
-
-const toDefaultEffect = () => {
-  formPhotoElement.style.filter = 'none';
-};
 const renderModalPhoto = () => {
   const fileImage = fileNameInputElement.files[0];
   formPhotoElement.src = URL.createObjectURL(fileImage);
@@ -32,7 +28,6 @@ const showEditModal = () => {
     editModalElement.classList.remove('hidden');
     document.body.classList.add('modal-open');
     document.addEventListener('keydown', onEditModalEscKeydown);
-    getFilterPreview();
   }
 };
 
@@ -41,7 +36,8 @@ const onFileInputChange = () => {
   renderModalPhoto();
   renderMiniPreviews();
   resetToDefault();
-  toDefaultEffect();
+  resetFilters();
+  renderFilters();
 };
 
 const hideEditModal = () => {

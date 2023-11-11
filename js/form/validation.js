@@ -1,4 +1,4 @@
-import { COMMENT_IN_FORM_LENGTH, HASHTAGS_MAX_COUNT, HASHTAGS_ERRORS } from './../constants.js';
+import { COMMENT_IN_FORM_LENGTH, HASHTAGS_MAX_COUNT, HASHTAGS_ERRORS, COMMENT_ERRORS } from './../constants.js';
 const formElement = document.querySelector('.img-upload__form');
 const hashInputElement = formElement.querySelector('.text__hashtags');
 const commentInputElement = formElement.querySelector('.text__description');
@@ -48,28 +48,33 @@ const resetData = () => {
   commentInputElement.value = '';
 };
 
-pristine.addValidator(commentInputElement,
+pristine.addValidator(
+  commentInputElement,
   validateComment,
-  'Не более 140 символов');
+  COMMENT_ERRORS.COUNT,
+  1,
+  true);
 
 pristine.addValidator(
   hashInputElement,
   isHashtagsCount,
   HASHTAGS_ERRORS.COUNT,
-  false);
+  3,
+  true);
 
 pristine.addValidator(
   hashInputElement,
   isHashtagsUnique,
   HASHTAGS_ERRORS.UNIQUE,
   2,
-  false);
+  true);
 
-pristine.addValidator(hashInputElement,
+pristine.addValidator(
+  hashInputElement,
   isHashtagsCorrect,
-  'некорректный хэштэг',
   HASHTAGS_ERRORS.CORRECT,
-  false);
+  1,
+  true);
 
 const isValid = () => pristine.validate();
 

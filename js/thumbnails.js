@@ -2,6 +2,7 @@ import { renderModal } from './modal/modal-photo.js';
 //находим dom елемент блока куда будем добавлять фотографии
 const picturesList = document.querySelector('.pictures');
 
+
 //находим элемент шаблона для добавления фото
 const pictureTemplate = document.querySelector('#picture').content.querySelector('a');
 

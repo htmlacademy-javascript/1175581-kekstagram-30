@@ -19,7 +19,7 @@ const resetCommentsCount = () => {
 
 const closeModal = () => {
   hideModal(modalElement);
-  removeEscListener();
+  removeModalEscListener();
   resetCommentsCount();
 };
 
@@ -66,7 +66,7 @@ function onModalEscKeydown(evt) {
   }
 }
 
-function removeEscListener() {
+function removeModalEscListener() {
   document.removeEventListener('keydown', onModalEscKeydown);
 }
 

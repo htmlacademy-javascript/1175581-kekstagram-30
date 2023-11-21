@@ -89,6 +89,11 @@ const Filters = {
 };
 
 
+const submitButtonValues = {
+  block: 'Публикуем..',
+  unblock: 'Опубликовать',
+};
+
 
 export {
   COMMENTS_TO_SHOW,
@@ -101,5 +106,7 @@ export {
   DEFOULT_SCALE,
   COMMENT_ERRORS,
   Filters,
-  FilterEffects
+  FilterEffects,
+  submitButtonValues,
 };
+

@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-expressions */
 import { isValid, resetData } from './validation.js';
-import { DEFOULT_SCALE } from '../constants.js';
+import { DEFOULT_SCALE, submitButtonValues } from '../constants.js';
 import { resetToDefault } from './scale.js';
 import { resetFilters, renderFilters } from './slider.js';
 import { sendData } from '../api.js';
-import {showErrorModal, showSuccessModal} from './form-popups.js';
+import { showErrorModal, showSuccessModal } from './form-popups.js';
 const fileNameInputElement = document.querySelector('.img-upload__input');
 const editModalElement = document.querySelector('.img-upload__overlay');
 const closeEditModalButton = document.querySelector('.img-upload__cancel');
@@ -75,31 +76,29 @@ function removeEditModalEscListener() {
 
 fileNameInputElement.addEventListener('change', () => onFileInputChange());
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Публикуем..';
+const isblockSubmitButton = (param = false) => {
+  submitButton.disabled = param;
+  param ? submitButton.textContent = submitButtonValues.block : submitButton.textContent = submitButtonValues.unblock;
 };
 
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
-};
-const setUserFormSubmit = (onSuccess) => {
+
+const setUserFormSubmit = () => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (isValid()) {
-      blockSubmitButton();
+      isblockSubmitButton(true);
       sendData(
         () => {
-          onSuccess();
-          unblockSubmitButton();
+          closeEditModal();
           showSuccessModal('Форма отправлена успешно');
         },
         () => {
           showErrorModal('Данные не отправлены :(');
-          unblockSubmitButton();
         },
         new FormData(evt.target),
+        () => {
+          isblockSubmitButton(false);
+        }
       );
     }
   });

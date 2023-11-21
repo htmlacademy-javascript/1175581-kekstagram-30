@@ -21,6 +21,8 @@ const closeSuccessModal = () => {
   document.addEventListener('keydown', onEditModalEscKeydown);
 };
 
+const closeFormPopup = () => {};
+
 const closeErrorModal = () => {
   errorModalElement.classList.add('hidden');
   removeErrorEscListener();

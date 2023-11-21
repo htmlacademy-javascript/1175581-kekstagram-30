@@ -14,58 +14,61 @@ document.body.appendChild(errorModalElement);
 const closeErrorButton = errorModalElement.querySelector('.error__button');
 const closeSuccessButton = successModalElement.querySelector('.success__button');
 
-const closeSuccessModal = () => {
-  successModalElement.classList.add('hidden');
-  removeSuccessEscListener();
-  removeBodySuccessClick();
-  document.addEventListener('keydown', onEditModalEscKeydown);
+const removePopupEscListener = (cb) => {
+  document.removeEventListener('keydown', cb);
 };
 
-const closeFormPopup = () => {};
+const removeBodyPopupClick = (cb) => {
+  document.removeEventListener('click', cb);
+};
+
+const closeSuccessModal = () => {
+  successModalElement.classList.add('hidden');
+  removePopupEscListener(onCloseSuccessEscKeydown);
+  removeBodyPopupClick(onBodyClosePopupClick);
+};
 
 const closeErrorModal = () => {
   errorModalElement.classList.add('hidden');
-  removeErrorEscListener();
-  removeBodyErrorClick();
+  removePopupEscListener(onCloseErrorEscKeydown);
+  removeBodyPopupClick(onBodyClosePopupClick);
   document.addEventListener('keydown', onEditModalEscKeydown);
 };
 
-const onCloseSuccessButtonClick = () => {
-  closeSuccessModal();
-};
-
-const onCloseErrorButtonClick = () => {
-  closeErrorModal();
-};
-
-const onCloseSuccessEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
+const onPopupButtonClick = (evt) => {
+  if (evt.target.classList.contains('success__button')) {
     closeSuccessModal();
   }
-};
-
-const onCloseErrorEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
+  else if (evt.target.classList.contains('error__button')) {
     closeErrorModal();
   }
 };
 
-const onBodyCloseErrorClick = (evt) => {
+function onCloseSuccessEscKeydown(evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeSuccessModal();
+  }
+}
+
+function onCloseErrorEscKeydown(evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeErrorModal();
+  }
+}
+
+function onBodyClosePopupClick(evt) {
   if (evt.target.classList.contains('error')) {
     closeErrorModal();
   }
-};
-
-const onBodyCloseSuccessClick = (evt) => {
-  if (evt.target.classList.contains('success')) {
+  else if (evt.target.classList.contains('success')) {
     closeSuccessModal();
   }
-};
+}
 
 const showErrorModal = (message) => {
-  document.addEventListener('click', onBodyCloseErrorClick);
+  document.addEventListener('click', onBodyClosePopupClick);
   document.addEventListener('keydown', onCloseErrorEscKeydown);
   document.removeEventListener('keydown', onEditModalEscKeydown);
   errorMessageElement.textContent = message;
@@ -73,31 +76,15 @@ const showErrorModal = (message) => {
 };
 
 const showSuccessModal = (message) => {
-  document.addEventListener('click', onBodyCloseSuccessClick);
+  document.addEventListener('click', onBodyClosePopupClick);
   document.addEventListener('keydown', onCloseSuccessEscKeydown);
   document.removeEventListener('keydown', onEditModalEscKeydown);
   successMessageElement.textContent = message;
   successModalElement.classList.remove('hidden');
 };
 
-function removeSuccessEscListener() {
-  document.removeEventListener('keydown', onCloseSuccessEscKeydown);
-}
+closeSuccessButton.addEventListener('click', onPopupButtonClick);
 
-function removeErrorEscListener() {
-  document.removeEventListener('keydown', onCloseErrorEscKeydown);
-}
-
-function removeBodyErrorClick() {
-  document.removeEventListener('click', onBodyCloseErrorClick);
-}
-
-function removeBodySuccessClick() {
-  document.removeEventListener('click', onBodyCloseSuccessClick);
-}
-
-closeSuccessButton.addEventListener('click', onCloseSuccessButtonClick);
-
-closeErrorButton.addEventListener('click', onCloseErrorButtonClick);
+closeErrorButton.addEventListener('click', onPopupButtonClick);
 
 export { showErrorModal, showSuccessModal };

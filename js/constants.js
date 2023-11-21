@@ -94,6 +94,15 @@ const submitButtonValues = {
   unblock: 'Опубликовать',
 };
 
+const apiLinks = {
+  getLink : 'https://30.javascript.pages.academy/kekstagram/data',
+  sendLink: 'https://30.javascript.pages.academy/kekstagram',
+};
+
+const RANDOM_PHOTO_SIZE = 10;
+
+const RENDER_DELAY = 500;
+
 
 export {
   COMMENTS_TO_SHOW,
@@ -108,5 +117,8 @@ export {
   Filters,
   FilterEffects,
   submitButtonValues,
+  apiLinks,
+  RANDOM_PHOTO_SIZE,
+  RENDER_DELAY,
 };
 

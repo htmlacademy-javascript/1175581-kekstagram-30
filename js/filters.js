@@ -1,8 +1,7 @@
-import { renderPhotoPosts } from './thumbnails';
-import { showError } from './errors.js';
-const photosListElement = document.querySelector('.pictures');
-const filtersButtons = document.querySelector('.img-filters__form');
-const size = 10;
+import { RANDOM_PHOTO_SIZE } from './constants';
+const filtersForm = document.querySelector('.img-filters__form');
+const filtersButtons = document.querySelectorAll('.img-filters__button');
+
 
 const getFiltersBlock = () => {
   const filtersBlockElement = document.querySelector('.img-filters');
@@ -12,7 +11,7 @@ const getFiltersBlock = () => {
 const getRandomPhotos = (photos) => {
   const ids = [];
   const randomPhotos = [];
-  while (ids.length < size) {
+  while (ids.length < RANDOM_PHOTO_SIZE) {
     const randomNumber = Math.floor(Math.random() * photos.length);
     if (!ids.find((item) => item === randomNumber)) {
       ids.push(randomNumber);
@@ -24,32 +23,47 @@ const getRandomPhotos = (photos) => {
   return randomPhotos;
 };
 
-const getFiltersData = (evt, onSuccess, onError) => {
-  fetch('https://30.javascript.pages.academy/kekstagram/data')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Данные с сервера не загрузились');
-    })
-    .then((photos) => {
-      if (evt.target.id === 'filter-random') {
-        photosListElement.innerHTML = '';
-        const randomPhotos = getRandomPhotos(photos);
-        return onSuccess(randomPhotos);
-      }
-      else if (evt.target.id === 'filter-discussed') {
-        photosListElement.innerHTML = '';
-        const photosDiscussed = photos.slice();
-        console.log(photosDiscussed);
-        }
-      else {
-        photosListElement.innerHTML = '';
-        onSuccess(photos);
-      }
-    })
-    .catch(() => onError('Данные с сервера не загрузились'));
+const compareCommentsLength = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
+
+const removeAllActive = () => {
+  filtersButtons.forEach((button) => {
+    button.classList.remove('img-filters__button--active');
+  });
 };
 
-filtersButtons.addEventListener('click', (evt) => getFiltersData(evt, (photos) => renderPhotoPosts(photos), showError));
-export { getFiltersBlock, getRandomPhotos , getFiltersData};
+const setDefaultClick = (cb, photos) => {
+  filtersForm.addEventListener('click', (evt) => {
+    if(evt.target.id === 'filter-default') {
+      removeAllActive();
+      evt.target.classList.add('img-filters__button--active');
+      cb(photos);
+    }
+  });
+
+};
+
+const setRandomClick = (cb, photos) => {
+  filtersForm.addEventListener('click', (evt) => {
+    if (evt.target.id === 'filter-random') {
+      removeAllActive();
+      evt.target.classList.add('img-filters__button--active');
+      const randomPhotos = getRandomPhotos(photos);
+      cb(randomPhotos);
+    }
+  });
+
+};
+
+const setDiscussedClick = (cb, photos) => {
+  filtersForm.addEventListener('click', (evt) => {
+    if (evt.target.id === 'filter-discussed') {
+      removeAllActive();
+      evt.target.classList.add('img-filters__button--active');
+      const photosDiscussed = photos.slice()
+        .sort(compareCommentsLength);
+      cb(photosDiscussed);
+    }
+  });
+};
+
+export { getFiltersBlock, setDefaultClick, setRandomClick, setDiscussedClick };

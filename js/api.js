@@ -1,6 +1,6 @@
-
+import { apiLinks } from './constants';
 const getData = (onSuccess, getFiltersBlock, onError) => {
-  fetch('https://30.javascript.pages.academy/kekstagram/data')
+  fetch(apiLinks.getLink)
     .then((response) => {
       if (response.ok) {
         getFiltersBlock();
@@ -15,7 +15,7 @@ const getData = (onSuccess, getFiltersBlock, onError) => {
 
 };
 const sendData = (onSuccess, onFail, body, blockButton) => {
-  fetch('https://30.javascript.pages.academy/kekstagram',
+  fetch(apiLinks.sendLink,
     {
       method: 'POST',
       body,

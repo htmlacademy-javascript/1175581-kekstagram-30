@@ -42,6 +42,7 @@ const renderModal = (evt, postArray) => {
   const photo = evt.target.closest('.picture');
   postArray.forEach((photoPost) => {
     if (photo !== null && parseInt(photo.dataset.id, 10) === photoPost.id) {
+      showCommentsCount = 0;
       openModal();
       removeComments();
       renderData(photoPost);

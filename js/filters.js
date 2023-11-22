@@ -1,11 +1,13 @@
 import { RANDOM_PHOTO_SIZE } from './constants';
-const filtersForm = document.querySelector('.img-filters__form');
+import { debounce } from './util.js';
+import { RENDER_DELAY } from './constants.js';
+const filtersFormElement = document.querySelector('.img-filters__form');
 const filtersButtons = document.querySelectorAll('.img-filters__button');
 
 
 const getFiltersBlock = () => {
   const filtersBlockElement = document.querySelector('.img-filters');
-  filtersBlockElement.style.opacity = 1;
+  filtersBlockElement.classList.remove('img-filters--inactive');
 };
 
 const getRandomPhotos = (photos) => {
@@ -31,39 +33,28 @@ const removeAllActive = () => {
   });
 };
 
-const setDefaultClick = (cb, photos) => {
-  filtersForm.addEventListener('click', (evt) => {
-    if(evt.target.id === 'filter-default') {
+const setFilters = (cb, photos) => {
+  filtersFormElement.addEventListener('click', debounce((evt) => {
+    if (evt.target.id === 'filter-default') {
       removeAllActive();
       evt.target.classList.add('img-filters__button--active');
       cb(photos);
     }
-  });
-
-};
-
-const setRandomClick = (cb, photos) => {
-  filtersForm.addEventListener('click', (evt) => {
-    if (evt.target.id === 'filter-random') {
+    else if (evt.target.id === 'filter-random') {
       removeAllActive();
       evt.target.classList.add('img-filters__button--active');
       const randomPhotos = getRandomPhotos(photos);
       cb(randomPhotos);
     }
-  });
-
-};
-
-const setDiscussedClick = (cb, photos) => {
-  filtersForm.addEventListener('click', (evt) => {
-    if (evt.target.id === 'filter-discussed') {
+    else if (evt.target.id === 'filter-discussed') {
       removeAllActive();
       evt.target.classList.add('img-filters__button--active');
       const photosDiscussed = photos.slice()
         .sort(compareCommentsLength);
       cb(photosDiscussed);
     }
-  });
+
+  }), RENDER_DELAY);
 };
 
-export { getFiltersBlock, setDefaultClick, setRandomClick, setDiscussedClick };
+export { getFiltersBlock, setFilters };

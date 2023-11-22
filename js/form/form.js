@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { isValid, resetData } from './validation.js';
-import { DEFOULT_SCALE, submitButtonValues } from '../constants.js';
+import { DefaultScale, SubmitButtonValues} from '../constants.js';
 import { resetToDefault } from './scale.js';
 import { resetFilters, renderFilters } from './slider.js';
 import { sendData } from '../api.js';
@@ -16,7 +16,7 @@ const previewMiniElements = document.querySelectorAll('.effects__preview');
 const renderModalPhoto = () => {
   const fileImage = fileNameInputElement.files[0];
   formPhotoElement.src = URL.createObjectURL(fileImage);
-  formPhotoElement.style.transform = `scale(${DEFOULT_SCALE.VALUE})`;
+  formPhotoElement.style.transform = `scale(${DefaultScale.VALUE})`;
 };
 
 const renderMiniPreviews = () => {
@@ -78,7 +78,7 @@ fileNameInputElement.addEventListener('change', () => onFileInputChange());
 
 const isblockSubmitButton = (param = false) => {
   submitButton.disabled = param;
-  param ? submitButton.textContent = submitButtonValues.block : submitButton.textContent = submitButtonValues.unblock;
+  param ? submitButton.textContent = SubmitButtonValues.BLOCK : submitButton.textContent = SubmitButtonValues.UNBLOCK;
 };
 
 

@@ -1,21 +1,21 @@
-import { apiLinks } from './constants';
+import { ApiLinks, ErrorMessages } from './constants';
 const getData = (onSuccess, getFiltersBlock, onError) => {
-  fetch(apiLinks.getLink)
+  fetch(ApiLinks.GET_LINK)
     .then((response) => {
       if (response.ok) {
         getFiltersBlock();
         return response.json();
       }
-      throw new Error('Данные с сервера не загрузились');
+      throw new Error(ErrorMessages.GET_ERROR);
     })
     .then((photos) => {
       onSuccess(photos);
     })
-    .catch(() => onError('Данные с сервера не загрузились'));
+    .catch(() => onError(ErrorMessages.GET_ERROR));
 
 };
 const sendData = (onSuccess, onFail, body, blockButton) => {
-  fetch(apiLinks.sendLink,
+  fetch(ApiLinks.SEND_LINK,
     {
       method: 'POST',
       body,
@@ -25,7 +25,7 @@ const sendData = (onSuccess, onFail, body, blockButton) => {
       onSuccess();
     }
     else {
-      throw new Error('Не удалось загрузить данные');
+      throw new Error(ErrorMessages.SEND_ERROR);
     }
 
   })

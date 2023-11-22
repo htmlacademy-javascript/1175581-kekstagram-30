@@ -33,29 +33,29 @@ const resetFilters = () => {
   effectValueElement.checked = true;
 };
 
-const sliderUpdate = ({ effect, unit }) => {
+const sliderUpdate = ({ EFFECT, UNIT}) => {
   sliderElement.noUiSlider.on('update', () => {
     effectValueElement.value = sliderElement.noUiSlider.get();
-    previewPhotoElement.style.filter = `${effect}(${effectValueElement.value}${unit})`;
+    previewPhotoElement.style.filter = `${EFFECT}(${effectValueElement.value}${UNIT})`;
   });
 
 };
 
-const sliderUpdateOptions = ({ min, max, step }) => {
+const sliderUpdateOptions = ({ MIN, MAX, STEP }) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: min,
-      max: max,
+      min: MIN,
+      max: MAX,
     },
     start: 100,
-    step: step,
+    step: STEP,
     connect: 'lower',
   });
 
 };
-const showEffect = ({ effect, effectValue, unit }) => {
+const showEffect = ({ EFFECT, effectValue, UNIT }) => {
   effectValueElement.value = sliderElement.noUiSlider.get();
-  previewPhotoElement.style.filter = `${effect}(${effectValue}${unit})`;
+  previewPhotoElement.style.filter = `${EFFECT}(${effectValue}${UNIT})`;
 };
 
 const onEffectChange = (evt) => {

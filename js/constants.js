@@ -1,123 +1,133 @@
 const COMMENTS_TO_SHOW = 5;
 
 const COMMENT_IN_FORM_LENGTH = 140;
+
 const HASHTAGS_MAX_COUNT = 5;
 
-const HASHTAGS_ERRORS = {
+const HashtagErrors = {
   CORRECT: 'введён невалидный хэш-тег',
   UNIQUE: 'хэш-теги повторяются',
   COUNT: 'превышено количество хэш-тегов',
 };
-const COMMENT_ERRORS = {
+
+const CommentErrors = {
   COUNT: 'длина комментария больше 140 символов',
 };
-const SCALE_STEP = {
+
+const ScaleStep = {
   PERCENTS: 25,
   VALUE: 0.25,
 };
-const MAX_SCALE = {
+
+const MaxScale = {
   PERCENTS: 100,
   VALUE: 1,
 };
-const MIN_SCALE = {
+
+const MinScale = {
   PERCENTS: 25,
   VALUE: 0.25,
 };
-const DEFOULT_SCALE = {
+
+const DefaultScale = {
   PERCENTS: 100,
   VALUE: 1,
 };
 
 const FilterEffects = {
-  none: 'None',
-  chrome: 'Chrome',
-  sepia: 'Sepia',
-  marvin: 'Marvin',
-  phobos: 'Phobos',
-  heat: 'Heat'
+  NONE: 'None',
+  CHROME: 'Chrome',
+  SEPIA: 'Sepia',
+  MARVIN: 'Marvin',
+  PHOBOS: 'Phobos',
+  HEAT: 'Heat'
 };
 
 const Filters = {
   None: {
-    effect: 'none',
-    effectValue: 0,
-    min: 0,
-    max: 0,
-    step: 0,
-    unit: '',
+    EFFECT: 'none',
+    EFFECT_VALUE: 0,
+    MIN: 0,
+    MAX: 0,
+    STEP: 0,
+    UNIT: '',
   },
   Chrome: {
-    effect: 'grayscale',
-    effectValue: 1,
-    min: 0,
-    max: 1,
-    step: 0.1,
-    unit: '',
+    EFFECT: 'grayscale',
+    EFFECT_VALUE: 1,
+    MIN: 0,
+    MAX: 1,
+    STEP: 0.1,
+    UNIT: '',
   },
   Sepia: {
-    effect: 'sepia',
-    effectValue: 1,
-    min: 0,
-    max: 1,
-    step: 0.1,
-    unit: '',
+    EFFECT: 'sepia',
+    EFFECT_VALUE: 1,
+    MIN: 0,
+    MAX: 1,
+    STEP: 0.1,
+    UNIT: '',
   },
   Marvin: {
-    effect: 'invert',
-    effectValue: 1,
-    min: 0,
-    max: 100,
-    step: 1,
-    unit: '%',
+    EFFECT: 'invert',
+    EFFECT_VALUE: 1,
+    MIN: 0,
+    MAX: 100,
+    STEP: 1,
+    UNIT: '%',
   },
   Phobos: {
-    effect: 'blur',
-    effectValue: 1,
-    min: 0,
-    max: 3,
-    step: 0.1,
-    unit: 'px',
+    EFFECT: 'blur',
+    EFFECT_VALUE: 1,
+    MIN: 0,
+    MAX: 3,
+    STEP: 0.1,
+    UNIT: 'px',
   },
   Heat: {
-    effect: 'brightness',
-    effectValue: 1,
-    min: 1,
-    max: 3,
-    step: 0.1,
-    unit: '',
+    EFFECT: 'brightness',
+    EFFECT_VALUE: 1,
+    MIN: 1,
+    MAX: 3,
+    STEP: 0.1,
+    UNIT: '',
   },
 };
 
-
-const submitButtonValues = {
-  block: 'Публикуем..',
-  unblock: 'Опубликовать',
+const SubmitButtonValues = {
+  BLOCK: 'Публикуем..',
+  UNBLOCK: 'Опубликовать',
 };
 
-const apiLinks = {
-  getLink : 'https://30.javascript.pages.academy/kekstagram/data',
-  sendLink: 'https://30.javascript.pages.academy/kekstagram',
+const ApiLinks = {
+  GET_LINK: 'https://30.javascript.pages.academy/kekstagram/data',
+  SEND_LINK: 'https://30.javascript.pages.academy/kekstagram',
+};
+
+const ErrorMessages = {
+  GET_ERROR: 'Данные с сервера не загрузились',
+  SEND_ERROR: 'Не удалось загрузить данные',
 };
 
 const RANDOM_PHOTO_SIZE = 10;
 
 const RENDER_DELAY = 500;
 
-
 export {
   COMMENTS_TO_SHOW,
   COMMENT_IN_FORM_LENGTH,
   HASHTAGS_MAX_COUNT,
-  HASHTAGS_ERRORS,
-  SCALE_STEP,
-  MAX_SCALE,
-  MIN_SCALE,
-  DEFOULT_SCALE,
-  COMMENT_ERRORS,
+  HashtagErrors,
+  CommentErrors,
+  ScaleStep,
+  MaxScale,
+  MinScale,
+  DefaultScale,
   Filters,
   FilterEffects,
-  submitButtonValues,
-  apiLinks,
+  SubmitButtonValues,
+  ApiLinks,
+  ErrorMessages,
   RANDOM_PHOTO_SIZE,
   RENDER_DELAY,
 };

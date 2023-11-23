@@ -5,7 +5,7 @@ const filtersFormElement = document.querySelector('.img-filters__form');
 const filtersButtons = document.querySelectorAll('.img-filters__button');
 
 
-const getFiltersBlock = () => {
+const showFiltersBlock = () => {
   const filtersBlockElement = document.querySelector('.img-filters');
   filtersBlockElement.classList.remove('img-filters--inactive');
 };
@@ -27,33 +27,30 @@ const getRandomPhotos = (photos) => {
 
 const compareCommentsLength = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
-const putActive = (element) => {
+const onActivePut = (element) => {
   filtersButtons.forEach((button) => {
     button.classList.remove('img-filters__button--active');
   });
   element.classList.add('img-filters__button--active');
 };
 
-filtersFormElement.addEventListener('click', (evt) => putActive(evt.target));
+filtersFormElement.addEventListener('click', (evt) => onActivePut(evt.target));
 
 const setFilters = (cb, photos) => {
   filtersFormElement.addEventListener('click', debounce((evt) => {
     if (evt.target.id === 'filter-default') {
-      // putActive(evt.target);
       cb(photos);
     }
     else if (evt.target.id === 'filter-random') {
-      // putActive(evt.target);
       const randomPhotos = getRandomPhotos(photos);
       cb(randomPhotos);
     }
     else if (evt.target.id === 'filter-discussed') {
-      // putActive(evt.target);
       const photosDiscussed = photos.slice()
         .sort(compareCommentsLength);
       cb(photosDiscussed);
     }
-  }));
+  }), RENDER_DELAY);
 };
 
-export { getFiltersBlock, setFilters };
+export { showFiltersBlock, setFilters };

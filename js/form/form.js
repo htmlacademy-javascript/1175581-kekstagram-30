@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-expressions */
 import { isValid, resetData } from './validation.js';
-import { DefaultScale, SubmitButtonValues} from '../constants.js';
+import { DefaultScale, SubmitButtonValues } from '../constants.js';
 import { resetToDefault } from './scale.js';
 import { resetFilters, renderFilters } from './slider.js';
 import { sendData } from '../api.js';
-import { showErrorModal, showSuccessModal } from './form-popups.js';
+import { showFormPopap, successModalElement, errorModalElement } from './form-popups.js';
 const fileNameInputElement = document.querySelector('.img-upload__input');
 const editModalElement = document.querySelector('.img-upload__overlay');
 const closeEditModalButton = document.querySelector('.img-upload__cancel');
@@ -78,7 +77,12 @@ fileNameInputElement.addEventListener('change', () => onFileInputChange());
 
 const isblockSubmitButton = (param = false) => {
   submitButton.disabled = param;
-  param ? submitButton.textContent = SubmitButtonValues.BLOCK : submitButton.textContent = SubmitButtonValues.UNBLOCK;
+  if (param) {
+    submitButton.textContent = SubmitButtonValues.BLOCK;
+  }
+  else {
+    submitButton.textContent = SubmitButtonValues.UNBLOCK;
+  }
 };
 
 
@@ -90,10 +94,10 @@ const setUserFormSubmit = () => {
       sendData(
         () => {
           closeEditModal();
-          showSuccessModal('Форма отправлена успешно');
+          showFormPopap(successModalElement, 'Форма отправлена успешно');
         },
         () => {
-          showErrorModal('Данные не отправлены :(');
+          showFormPopap(errorModalElement, 'Данные не отправлены :(');
         },
         new FormData(evt.target),
         () => {

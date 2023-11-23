@@ -2,8 +2,6 @@ const errorTemplate = document.querySelector('#data-error').content.querySelecto
 const errorElement = errorTemplate.cloneNode('true');
 const errorMessageElement = errorElement.querySelector('h2');
 
-
-
 const hideError = () => {
   errorElement.remove();
 };

@@ -4,9 +4,6 @@ const errorTemplate = document.querySelector('#error').content.querySelector('se
 
 const successModalElement = successTemplate.cloneNode(true);
 const errorModalElement = errorTemplate.cloneNode(true);
-const successMessageElement = successModalElement.querySelector('h2');
-const errorMessageElement = errorModalElement.querySelector('h2');
-
 
 const closeErrorButton = errorModalElement.querySelector('.error__button');
 const closeSuccessButton = successModalElement.querySelector('.success__button');
@@ -19,69 +16,71 @@ const removeBodyPopupClick = (cb) => {
   document.removeEventListener('click', cb);
 };
 
-const closeSuccessModal = () => {
-  successModalElement.remove();
-  removePopupEscListener(onCloseSuccessEscKeydown);
-  removeBodyPopupClick(onBodyClosePopupClick);
+const removeFormEscClick = (cb) => {
+  document.removeEventListener('click', cb);
 };
 
-const closeErrorModal = () => {
-  errorModalElement.remove();
-  removePopupEscListener(onCloseErrorEscKeydown);
+const closeFormPopup = (element) => {
+  element.remove();
+  if(element.classList.contains('success')) {
+    removePopupEscListener(onCloseSuccessEscKeydown);
+    removeFormEscClick(onEditModalEscKeydown);
+  }
+  else if(element.classList.contains('error')) {
+    removePopupEscListener(onCloseErrorEscKeydown);
+    document.addEventListener('keydown', onEditModalEscKeydown);
+  }
   removeBodyPopupClick(onBodyClosePopupClick);
-  document.addEventListener('keydown', onEditModalEscKeydown);
 };
 
 const onPopupButtonClick = (evt) => {
   if (evt.target.classList.contains('success__button')) {
-    closeSuccessModal();
+    closeFormPopup(evt.target.closest('section'));
   }
   else if (evt.target.classList.contains('error__button')) {
-    closeErrorModal();
+    closeFormPopup(evt.target.closest('section'));
   }
 };
+
 
 function onCloseSuccessEscKeydown(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeSuccessModal();
+    closeFormPopup(successModalElement);
   }
 }
 
 function onCloseErrorEscKeydown(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeErrorModal();
+    closeFormPopup(errorModalElement);
   }
 }
 
 function onBodyClosePopupClick(evt) {
   if (evt.target.classList.contains('error')) {
-    closeErrorModal();
+    closeFormPopup(evt.target);
   }
   else if (evt.target.classList.contains('success')) {
-    closeSuccessModal();
+    closeFormPopup(evt.target);
   }
 }
 
-const showErrorModal = (message) => {
+const showFormPopap = (element, message) => {
   document.addEventListener('click', onBodyClosePopupClick);
-  document.addEventListener('keydown', onCloseErrorEscKeydown);
+  if(element.classList.contains('success')){
+    document.addEventListener('keydown', onCloseSuccessEscKeydown);
+  }
+  else if (element.classList.contains('error')) {
+    document.addEventListener('keydown', onCloseErrorEscKeydown);
+  }
   document.removeEventListener('keydown', onEditModalEscKeydown);
-  errorMessageElement.textContent = message;
-  document.body.appendChild(errorModalElement);
-};
-
-const showSuccessModal = (message) => {
-  document.addEventListener('click', onBodyClosePopupClick);
-  document.addEventListener('keydown', onCloseSuccessEscKeydown);
-  document.removeEventListener('keydown', onEditModalEscKeydown);
-  successMessageElement.textContent = message;
-  document.body.appendChild(successModalElement);
+  element.querySelector('h2').textContent = message;
+  document.body.appendChild(element);
 };
 
 closeSuccessButton.addEventListener('click', onPopupButtonClick);
 
 closeErrorButton.addEventListener('click', onPopupButtonClick);
 
-export { showErrorModal, showSuccessModal };
+export { showFormPopap, successModalElement, errorModalElement };

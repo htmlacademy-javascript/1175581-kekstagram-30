@@ -5,31 +5,31 @@ const scaleValueElement = document.querySelector('.scale__control--value');
 const previewElement = document.querySelector('.img-upload__preview img');
 let currentScale = DefaultScale.VALUE;
 
-const scaleSmaller = () => {
+const scaleLow = () => {
   if (currentScale > MinScale.VALUE) {
     const smallerScale = currentScale - ScaleStep.VALUE;
     previewElement.style.transform = `scale(${smallerScale})`;
     currentScale = smallerScale;
   }
-  scaleValueElement.value = `${currentScale * 100}%`;
+  scaleValueElement.value = `${currentScale * DefaultScale.PERCENTS}%`;
 };
 
-const scaleBigger = () => {
+const scaleHigh = () => {
   if (currentScale < MaxScale.VALUE) {
     const biggerScale = currentScale + ScaleStep.VALUE;
     previewElement.style.transform = `scale(${biggerScale})`;
     currentScale = biggerScale;
   }
-  scaleValueElement.value = `${currentScale * 100}%`;
+  scaleValueElement.value = `${currentScale * DefaultScale.PERCENTS}%`;
 
 };
 
 const onScaleSmallerClick = () => {
-  scaleSmaller();
+  scaleLow();
 };
 
 const onScaleBiggerClick = () => {
-  scaleBigger();
+  scaleHigh();
 };
 
 const resetToDefault = () => {

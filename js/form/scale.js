@@ -33,9 +33,9 @@ const onScaleBiggerClick = () => {
 };
 
 const resetToDefault = () => {
+  scaleValueElement.value = `${DefaultScale.PERCENTS}%`;
   previewElement.style.transform = `scale(${DefaultScale.VALUE})`;
   currentScale = DefaultScale.VALUE;
-
 };
 
 scaleSmallerButton.addEventListener('click', onScaleSmallerClick);

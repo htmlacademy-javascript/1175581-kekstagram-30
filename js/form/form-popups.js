@@ -6,10 +6,7 @@ const successModalElement = successTemplate.cloneNode(true);
 const errorModalElement = errorTemplate.cloneNode(true);
 const successMessageElement = successModalElement.querySelector('h2');
 const errorMessageElement = errorModalElement.querySelector('h2');
-successModalElement.classList.add('hidden');
-errorModalElement.classList.add('hidden');
-document.body.appendChild(successModalElement);
-document.body.appendChild(errorModalElement);
+
 
 const closeErrorButton = errorModalElement.querySelector('.error__button');
 const closeSuccessButton = successModalElement.querySelector('.success__button');
@@ -23,13 +20,13 @@ const removeBodyPopupClick = (cb) => {
 };
 
 const closeSuccessModal = () => {
-  successModalElement.classList.add('hidden');
+  successModalElement.remove();
   removePopupEscListener(onCloseSuccessEscKeydown);
   removeBodyPopupClick(onBodyClosePopupClick);
 };
 
 const closeErrorModal = () => {
-  errorModalElement.classList.add('hidden');
+  errorModalElement.remove();
   removePopupEscListener(onCloseErrorEscKeydown);
   removeBodyPopupClick(onBodyClosePopupClick);
   document.addEventListener('keydown', onEditModalEscKeydown);
@@ -72,7 +69,7 @@ const showErrorModal = (message) => {
   document.addEventListener('keydown', onCloseErrorEscKeydown);
   document.removeEventListener('keydown', onEditModalEscKeydown);
   errorMessageElement.textContent = message;
-  errorModalElement.classList.remove('hidden');
+  document.body.appendChild(errorModalElement);
 };
 
 const showSuccessModal = (message) => {
@@ -80,7 +77,7 @@ const showSuccessModal = (message) => {
   document.addEventListener('keydown', onCloseSuccessEscKeydown);
   document.removeEventListener('keydown', onEditModalEscKeydown);
   successMessageElement.textContent = message;
-  successModalElement.classList.remove('hidden');
+  document.body.appendChild(successModalElement);
 };
 
 closeSuccessButton.addEventListener('click', onPopupButtonClick);

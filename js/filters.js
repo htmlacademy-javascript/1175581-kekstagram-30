@@ -27,34 +27,33 @@ const getRandomPhotos = (photos) => {
 
 const compareCommentsLength = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
-const removeAllActive = () => {
+const putActive = (element) => {
   filtersButtons.forEach((button) => {
     button.classList.remove('img-filters__button--active');
   });
+  element.classList.add('img-filters__button--active');
 };
+
+filtersFormElement.addEventListener('click', (evt) => putActive(evt.target));
 
 const setFilters = (cb, photos) => {
   filtersFormElement.addEventListener('click', debounce((evt) => {
     if (evt.target.id === 'filter-default') {
-      removeAllActive();
-      evt.target.classList.add('img-filters__button--active');
+      // putActive(evt.target);
       cb(photos);
     }
     else if (evt.target.id === 'filter-random') {
-      removeAllActive();
-      evt.target.classList.add('img-filters__button--active');
+      // putActive(evt.target);
       const randomPhotos = getRandomPhotos(photos);
       cb(randomPhotos);
     }
     else if (evt.target.id === 'filter-discussed') {
-      removeAllActive();
-      evt.target.classList.add('img-filters__button--active');
+      // putActive(evt.target);
       const photosDiscussed = photos.slice()
         .sort(compareCommentsLength);
       cb(photosDiscussed);
     }
-
-  }), RENDER_DELAY);
+  }));
 };
 
 export { getFiltersBlock, setFilters };

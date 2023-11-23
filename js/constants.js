@@ -34,17 +34,8 @@ const DefaultScale = {
   VALUE: 1,
 };
 
-const FilterEffects = {
-  NONE: 'None',
-  CHROME: 'Chrome',
-  SEPIA: 'Sepia',
-  MARVIN: 'Marvin',
-  PHOBOS: 'Phobos',
-  HEAT: 'Heat'
-};
-
 const Filters = {
-  None: {
+  NONE: {
     EFFECT: 'none',
     EFFECT_VALUE: 0,
     MIN: 0,
@@ -52,7 +43,7 @@ const Filters = {
     STEP: 0,
     UNIT: '',
   },
-  Chrome: {
+  CHROME: {
     EFFECT: 'grayscale',
     EFFECT_VALUE: 1,
     MIN: 0,
@@ -60,7 +51,7 @@ const Filters = {
     STEP: 0.1,
     UNIT: '',
   },
-  Sepia: {
+  SEPIA: {
     EFFECT: 'sepia',
     EFFECT_VALUE: 1,
     MIN: 0,
@@ -68,7 +59,7 @@ const Filters = {
     STEP: 0.1,
     UNIT: '',
   },
-  Marvin: {
+  MARVIN: {
     EFFECT: 'invert',
     EFFECT_VALUE: 1,
     MIN: 0,
@@ -76,7 +67,7 @@ const Filters = {
     STEP: 1,
     UNIT: '%',
   },
-  Phobos: {
+  PHOBOS: {
     EFFECT: 'blur',
     EFFECT_VALUE: 1,
     MIN: 0,
@@ -84,7 +75,7 @@ const Filters = {
     STEP: 0.1,
     UNIT: 'px',
   },
-  Heat: {
+  HEAT: {
     EFFECT: 'brightness',
     EFFECT_VALUE: 1,
     MIN: 1,
@@ -101,7 +92,7 @@ const SubmitButtonValues = {
 
 const ApiLinks = {
   GET_LINK: 'https://30.javascript.pages.academy/kekstagram/data',
-  SEND_LINK: 'https://30.javascript.pages.academy/kekstagram',
+  SEND_LINK: 'https://30.javascript.pages.academy/kekstagram/',
 };
 
 const ErrorMessages = {
@@ -124,7 +115,6 @@ export {
   MinScale,
   DefaultScale,
   Filters,
-  FilterEffects,
   SubmitButtonValues,
   ApiLinks,
   ErrorMessages,

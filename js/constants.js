@@ -85,6 +85,8 @@ const Filters = {
   },
 };
 
+const FILE_TYPES = ['jpeg', 'jpg', 'png'];
+
 const SubmitButtonValues = {
   BLOCK: 'Публикуем..',
   UNBLOCK: 'Опубликовать',
@@ -120,5 +122,6 @@ export {
   ErrorMessages,
   RANDOM_PHOTO_SIZE,
   RENDER_DELAY,
+  FILE_TYPES,
 };
 

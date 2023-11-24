@@ -1,12 +1,9 @@
 const errorTemplate = document.querySelector('#data-error').content.querySelector('section');
 const errorElement = errorTemplate.cloneNode('true');
-document.body.appendChild(errorElement);
 const errorMessageElement = errorElement.querySelector('h2');
-errorElement.classList.add('hidden');
-
 
 const hideError = () => {
-  errorElement.classList.add('hidden');
+  errorElement.remove();
 };
 
 const closeError = () => {
@@ -14,7 +11,7 @@ const closeError = () => {
 };
 
 const showError = (message) => {
-  errorElement.classList.remove('hidden');
+  document.body.appendChild(errorElement);
   errorMessageElement.textContent = message;
   closeError();
 };

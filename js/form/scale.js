@@ -1,41 +1,41 @@
-import { SCALE_STEP, MAX_SCALE, MIN_SCALE, DEFOULT_SCALE } from '../constants.js';
+import { ScaleStep, MaxScale, MinScale, DefaultScale } from '../constants.js';
 const scaleSmallerButton = document.querySelector('.scale__control--smaller');
 const scaleBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleValueElement = document.querySelector('.scale__control--value');
 const previewElement = document.querySelector('.img-upload__preview img');
-let currentScale = DEFOULT_SCALE.VALUE;
+let currentScale = DefaultScale.VALUE;
 
-const scaleSmaller = () => {
-  if (currentScale > MIN_SCALE.VALUE) {
-    const smallerScale = currentScale - SCALE_STEP.VALUE;
+const scaleLow = () => {
+  if (currentScale > MinScale.VALUE) {
+    const smallerScale = currentScale - ScaleStep.VALUE;
     previewElement.style.transform = `scale(${smallerScale})`;
     currentScale = smallerScale;
   }
-  scaleValueElement.value = `${currentScale * 100}%`;
+  scaleValueElement.value = `${currentScale * DefaultScale.PERCENTS}%`;
 };
 
-const scaleBigger = () => {
-  if (currentScale < MAX_SCALE.VALUE) {
-    const biggerScale = currentScale + SCALE_STEP.VALUE;
+const scaleHigh = () => {
+  if (currentScale < MaxScale.VALUE) {
+    const biggerScale = currentScale + ScaleStep.VALUE;
     previewElement.style.transform = `scale(${biggerScale})`;
     currentScale = biggerScale;
   }
-  scaleValueElement.value = `${currentScale * 100}%`;
+  scaleValueElement.value = `${currentScale * DefaultScale.PERCENTS}%`;
 
 };
 
 const onScaleSmallerClick = () => {
-  scaleSmaller();
+  scaleLow();
 };
 
 const onScaleBiggerClick = () => {
-  scaleBigger();
+  scaleHigh();
 };
 
 const resetToDefault = () => {
-  previewElement.style.transform = `scale(${DEFOULT_SCALE.VALUE})`;
-  currentScale = DEFOULT_SCALE.VALUE;
-
+  scaleValueElement.value = `${DefaultScale.PERCENTS}%`;
+  previewElement.style.transform = `scale(${DefaultScale.VALUE})`;
+  currentScale = DefaultScale.VALUE;
 };
 
 scaleSmallerButton.addEventListener('click', onScaleSmallerClick);

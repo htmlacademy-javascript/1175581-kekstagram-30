@@ -1,7 +1,13 @@
 import { renderPhotoPosts } from './thumbnails.js';
-import {closeEditModal, setUserFormSubmit} from './form/form.js';
+import { setUserFormSubmit} from './form/form.js';
 import { getData } from './api.js';
 import { showError } from './errors.js';
-getData((photos) => renderPhotoPosts(photos), showError);
+import { showFiltersBlock, setFilters } from './filters.js';
 
-setUserFormSubmit(closeEditModal);
+setUserFormSubmit();
+
+getData((photos) => {
+  renderPhotoPosts(photos);
+  setFilters((data) => renderPhotoPosts(data), photos);
+}, showFiltersBlock, showError);
+

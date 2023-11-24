@@ -1,9 +1,10 @@
-import { Filters, FilterEffects } from '../constants';
+import { Filters } from '../constants';
 const sliderElement = document.querySelector('.effect-level__slider');
+const sliderField = document.querySelector('.img-upload__effect-level');
 const effectValueElement = document.querySelector('.effect-level__value');
 const previewMiniList = document.querySelector('.effects__list');
 const previewPhotoElement = document.querySelector('.img-upload__preview img');
-
+const defaultPrewiewElement = document.querySelector('#effect-none');
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
@@ -25,47 +26,50 @@ noUiSlider.create(sliderElement, {
   },
 });
 
-const isNoneEffect = (currentEffect) => currentEffect.effect === 'none';
+const isNoneEffect = (currentEffect) => currentEffect.EFFECT === 'none';
 
 const resetFilters = () => {
   sliderElement.classList.add('hidden');
+  sliderField.classList.add('hidden');
   previewPhotoElement.style.filter = 'none';
-  effectValueElement.checked = true;
+  defaultPrewiewElement.checked = true;
 };
 
-const sliderUpdate = ({ effect, unit }) => {
+const sliderUpdate = ({ EFFECT, UNIT}) => {
   sliderElement.noUiSlider.on('update', () => {
     effectValueElement.value = sliderElement.noUiSlider.get();
-    previewPhotoElement.style.filter = `${effect}(${effectValueElement.value}${unit})`;
+    previewPhotoElement.style.filter = `${EFFECT}(${effectValueElement.value}${UNIT})`;
   });
 
 };
 
-const sliderUpdateOptions = ({ min, max, step }) => {
+const sliderUpdateOptions = ({ MIN, MAX, STEP }) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: min,
-      max: max,
+      min: MIN,
+      max: MAX,
     },
     start: 100,
-    step: step,
+    step: STEP,
     connect: 'lower',
   });
 
 };
-const showEffect = ({ effect, effectValue, unit }) => {
+const showEffect = ({ EFFECT, effectValue, UNIT }) => {
   effectValueElement.value = sliderElement.noUiSlider.get();
-  previewPhotoElement.style.filter = `${effect}(${effectValue}${unit})`;
+  previewPhotoElement.style.filter = `${EFFECT}(${effectValue}${UNIT})`;
 };
 
 const onEffectChange = (evt) => {
-  const currentEffect = Filters[FilterEffects[evt.target.value]];
+  const currentEffect = Filters[evt.target.value.toUpperCase()];
   if (isNoneEffect(currentEffect)) {
     previewPhotoElement.style.filter = 'none';
     sliderElement.classList.add('hidden');
+    sliderField.classList.add('hidden');
   }
   else {
     sliderElement.classList.remove('hidden');
+    sliderField.classList.remove('hidden');
     sliderUpdateOptions(currentEffect);
     showEffect(currentEffect);
     sliderUpdate(currentEffect);

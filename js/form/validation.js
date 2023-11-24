@@ -1,12 +1,11 @@
-import { COMMENT_IN_FORM_LENGTH, HASHTAGS_MAX_COUNT, HASHTAGS_ERRORS, COMMENT_ERRORS } from './../constants.js';
+import { COMMENT_IN_FORM_LENGTH, HASHTAGS_MAX_COUNT, HashtagErrors, CommentErrors } from './../constants.js';
 const formElement = document.querySelector('.img-upload__form');
 const hashInputElement = formElement.querySelector('.text__hashtags');
 const commentInputElement = formElement.querySelector('.text__description');
+const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const validateComment = (value) =>
   value.length <= COMMENT_IN_FORM_LENGTH;
-
-const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const getHashtags = (hashtagString) => {
   const hashtags = [];
@@ -51,28 +50,28 @@ const resetData = () => {
 pristine.addValidator(
   commentInputElement,
   validateComment,
-  COMMENT_ERRORS.COUNT,
+  CommentErrors.COUNT,
   1,
   true);
 
 pristine.addValidator(
   hashInputElement,
   isHashtagsCount,
-  HASHTAGS_ERRORS.COUNT,
+  HashtagErrors.COUNT,
   3,
   true);
 
 pristine.addValidator(
   hashInputElement,
   isHashtagsUnique,
-  HASHTAGS_ERRORS.UNIQUE,
+  HashtagErrors.UNIQUE,
   2,
   true);
 
 pristine.addValidator(
   hashInputElement,
   isHashtagsCorrect,
-  HASHTAGS_ERRORS.CORRECT,
+  HashtagErrors.CORRECT,
   1,
   true);
 

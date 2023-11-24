@@ -9,6 +9,10 @@ const removeCards = () => {
   });
 };
 
+const onModalRender = (evt, postArray) => {
+  renderModal(evt, postArray);
+};
+
 const renderPhotoPosts = (postArray) => {
   postArray.forEach(({ id, url, description, likes, comments }) => {
     removeCards();
@@ -21,7 +25,7 @@ const renderPhotoPosts = (postArray) => {
     picturesListFragment.appendChild(photoElement);
   });
   picturesList.appendChild(picturesListFragment);
-  picturesList.addEventListener('click', (evt) => renderModal(evt, postArray));
+  picturesList.addEventListener('click', (evt) => onModalRender(evt, postArray));
 
 };
 

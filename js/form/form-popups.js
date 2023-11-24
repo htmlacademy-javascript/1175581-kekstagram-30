@@ -8,29 +8,18 @@ const errorModalElement = errorTemplate.cloneNode(true);
 const closeErrorButton = errorModalElement.querySelector('.error__button');
 const closeSuccessButton = successModalElement.querySelector('.success__button');
 
-const removePopupEscListener = (cb) => {
-  document.removeEventListener('keydown', cb);
-};
-
-const removeBodyPopupClick = (cb) => {
-  document.removeEventListener('click', cb);
-};
-
-const removeFormEscClick = (cb) => {
-  document.removeEventListener('click', cb);
-};
-
 const closeFormPopup = (element) => {
   element.remove();
   if(element.classList.contains('success')) {
-    removePopupEscListener(onCloseSuccessEscKeydown);
-    removeFormEscClick(onEditModalEscKeydown);
+    document.removeEventListener('keydown', onCloseSuccessEscKeydown);
+    document.removeEventListener('click', onEditModalEscKeydown);
   }
   else if(element.classList.contains('error')) {
-    removePopupEscListener(onCloseErrorEscKeydown);
+    document.removeEventListener('keydown', onCloseErrorEscKeydown);
     document.addEventListener('keydown', onEditModalEscKeydown);
   }
-  removeBodyPopupClick(onBodyClosePopupClick);
+
+  document.removeEventListener('click', onBodyClosePopupClick);
 };
 
 const onPopupButtonClick = (evt) => {

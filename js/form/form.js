@@ -1,5 +1,5 @@
 import { isValid, resetData } from './validation.js';
-import { DefaultScale, SubmitButtonValues } from '../constants.js';
+import { DefaultScale, SubmitButtonValues, FILE_TYPES } from '../constants.js';
 import { resetToDefault } from './scale.js';
 import { resetFilters, renderFilters } from './slider.js';
 import { sendData } from '../api.js';
@@ -12,10 +12,16 @@ const formElement = document.querySelector('.img-upload__form');
 const formPhotoElement = formElement.querySelector('.img-upload__preview img');
 const previewMiniElements = document.querySelectorAll('.effects__preview');
 
+const isValidType = (file) => {
+  const filename = file.name.toLowerCase();
+  return FILE_TYPES.some((format) => filename.endsWith(format));
+};
 const renderModalPhoto = () => {
   const fileImage = fileNameInputElement.files[0];
-  formPhotoElement.src = URL.createObjectURL(fileImage);
-  formPhotoElement.style.transform = `scale(${DefaultScale.VALUE})`;
+  if (fileImage && isValidType(fileImage)) {
+    formPhotoElement.src = URL.createObjectURL(fileImage);
+    formPhotoElement.style.transform = `scale(${DefaultScale.VALUE})`;
+  }
 };
 
 const renderMiniPreviews = () => {
@@ -86,26 +92,28 @@ const isblockSubmitButton = (param = false) => {
 };
 
 
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  if (isValid()) {
+    isblockSubmitButton(true);
+    sendData(
+      () => {
+        closeEditModal();
+        showFormPopap(successModalElement, 'Форма отправлена успешно');
+      },
+      () => {
+        showFormPopap(errorModalElement, 'Данные не отправлены :(');
+      },
+      new FormData(evt.target),
+      () => {
+        isblockSubmitButton(false);
+      }
+    );
+  }
+};
+
 const setUserFormSubmit = () => {
-  formElement.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    if (isValid()) {
-      isblockSubmitButton(true);
-      sendData(
-        () => {
-          closeEditModal();
-          showFormPopap(successModalElement, 'Форма отправлена успешно');
-        },
-        () => {
-          showFormPopap(errorModalElement, 'Данные не отправлены :(');
-        },
-        new FormData(evt.target),
-        () => {
-          isblockSubmitButton(false);
-        }
-      );
-    }
-  });
+  formElement.addEventListener('submit', onFormSubmit);
 };
 
 export { closeEditModal, onEditModalEscKeydown, setUserFormSubmit };

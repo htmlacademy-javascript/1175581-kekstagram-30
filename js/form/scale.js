@@ -24,11 +24,11 @@ const scaleHigh = () => {
 
 };
 
-const onScaleSmallerClick = () => {
+const onScaleLowClick = () => {
   scaleLow();
 };
 
-const onScaleBiggerClick = () => {
+const onScaleHighClick = () => {
   scaleHigh();
 };
 
@@ -38,8 +38,8 @@ const resetToDefault = () => {
   currentScale = DefaultScale.VALUE;
 };
 
-scaleSmallerButton.addEventListener('click', onScaleSmallerClick);
+scaleSmallerButton.addEventListener('click', onScaleLowClick);
 
-scaleBiggerButton.addEventListener('click', onScaleBiggerClick);
+scaleBiggerButton.addEventListener('click', onScaleHighClick);
 
 export {resetToDefault};

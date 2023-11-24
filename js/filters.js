@@ -14,7 +14,7 @@ const getRandomPhotos = (photos) => {
   const ids = [];
   const randomPhotos = [];
   while (ids.length < RANDOM_PHOTO_SIZE) {
-    const randomNumber = Math.floor(Math.random() * photos.length);
+    const randomNumber = Math.floor(Math.random() * (photos.length - 1));
     if (!ids.find((item) => item === randomNumber)) {
       ids.push(randomNumber);
     }
@@ -24,6 +24,7 @@ const getRandomPhotos = (photos) => {
   });
   return randomPhotos;
 };
+
 
 const compareCommentsLength = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 

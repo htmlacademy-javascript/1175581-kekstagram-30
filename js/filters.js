@@ -1,9 +1,9 @@
 import { RANDOM_PHOTO_SIZE } from './constants';
 import { debounce } from './util.js';
 import { RENDER_DELAY } from './constants.js';
+
 const filtersFormElement = document.querySelector('.img-filters__form');
 const filtersButtons = filtersFormElement.querySelectorAll('.img-filters__button');
-
 
 const showFiltersBlock = () => {
   const filtersBlockElement = document.querySelector('.img-filters');
@@ -25,7 +25,6 @@ const getRandomPhotos = (photos) => {
   return randomPhotos;
 };
 
-
 const compareCommentsLength = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
 const onActivePut = (element) => {
@@ -38,15 +37,12 @@ const onActivePut = (element) => {
 filtersFormElement.addEventListener('click', (evt) => onActivePut(evt.target));
 
 const onFilterRender = (evt, cb, photos) => {
-
   if (evt.target.id === 'filter-default') {
     cb(photos);
-  }
-  else if (evt.target.id === 'filter-random') {
+  } else if (evt.target.id === 'filter-random') {
     const randomPhotos = getRandomPhotos(photos);
     cb(randomPhotos);
-  }
-  else if (evt.target.id === 'filter-discussed') {
+  } else if (evt.target.id === 'filter-discussed') {
     const photosDiscussed = photos.slice()
       .sort(compareCommentsLength);
     cb(photosDiscussed);
@@ -54,7 +50,6 @@ const onFilterRender = (evt, cb, photos) => {
 };
 
 const setFilters = (cb, photos) => {
-
   filtersFormElement.addEventListener('click', debounce((evt) => onFilterRender(evt, cb, photos), RENDER_DELAY));
 };
 

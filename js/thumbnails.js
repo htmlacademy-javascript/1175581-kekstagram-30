@@ -26,7 +26,6 @@ const renderPhotoPosts = (postArray) => {
   });
   picturesList.appendChild(picturesListFragment);
   picturesList.addEventListener('click', (evt) => onModalRender(evt, postArray));
-
 };
 
 export { renderPhotoPosts };

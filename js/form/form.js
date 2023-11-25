@@ -4,6 +4,7 @@ import { resetToDefault } from './scale.js';
 import { resetFilters, renderFilters } from './slider.js';
 import { sendData } from '../api.js';
 import { showFormPopap, successModalElement, errorModalElement } from './form-popups.js';
+
 const fileNameInputElement = document.querySelector('.img-upload__input');
 const editModalElement = document.querySelector('.img-upload__overlay');
 const closeEditModalButton = document.querySelector('.img-upload__cancel');
@@ -16,6 +17,7 @@ const isValidType = (file) => {
   const filename = file.name.toLowerCase();
   return FILE_TYPES.some((format) => filename.endsWith(format));
 };
+
 const renderModalPhoto = () => {
   const fileImage = fileNameInputElement.files[0];
   if (fileImage && isValidType(fileImage)) {
@@ -30,8 +32,8 @@ const renderMiniPreviews = () => {
   previewMiniElements.forEach((previewMini) => {
     previewMini.style.backgroundImage = `url(${url})`;
   });
-
 };
+
 const showEditModal = () => {
   if (fileNameInputElement.files.length !== 0) {
     editModalElement.classList.remove('hidden');
@@ -60,6 +62,7 @@ const closeEditModal = () => {
   fileNameInputElement.value = '';
   resetData();
 };
+
 const onCloseEditModalClick = () => {
   closeEditModal();
 };
@@ -85,12 +88,10 @@ const isblockSubmitButton = (param = false) => {
   submitButton.disabled = param;
   if (param) {
     submitButton.textContent = SubmitButtonValues.BLOCK;
-  }
-  else {
+  } else {
     submitButton.textContent = SubmitButtonValues.UNBLOCK;
   }
 };
-
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();

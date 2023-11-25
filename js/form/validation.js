@@ -1,8 +1,9 @@
-import { COMMENT_IN_FORM_LENGTH, HASHTAGS_MAX_COUNT, HashtagErrors, CommentErrors } from './../constants.js';
+import { COMMENT_IN_FORM_LENGTH, HASHTAGS_MAX_COUNT, HASHTAG_REG, HashtagErrors, CommentErrors } from './../constants.js';
+
 const formElement = document.querySelector('.img-upload__form');
 const hashInputElement = formElement.querySelector('.text__hashtags');
 const commentInputElement = formElement.querySelector('.text__description');
-const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
+const hashtagRegExp = HASHTAG_REG;
 
 const validateComment = (value) =>
   value.length <= COMMENT_IN_FORM_LENGTH;
@@ -19,6 +20,7 @@ const isHashtagsCount = (hashtagString) => {
   const hashtags = getHashtags(hashtagString);
   return hashtags.length <= HASHTAGS_MAX_COUNT;
 };
+
 const isHashtagsUnique = (hashtagString) => {
   const hashtags = getHashtags(hashtagString.toLowerCase());
   const arrayWithoutLastIndex = hashtags.slice(0, -1);

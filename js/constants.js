@@ -4,6 +4,8 @@ const COMMENT_IN_FORM_LENGTH = 140;
 
 const HASHTAGS_MAX_COUNT = 5;
 
+const HASHTAG_REG = /^#[a-zа-яё0-9]{1,19}$/i;
+
 const HashtagErrors = {
   CORRECT: 'введён невалидный хэш-тег',
   UNIQUE: 'хэш-теги повторяются',
@@ -110,6 +112,7 @@ export {
   COMMENTS_TO_SHOW,
   COMMENT_IN_FORM_LENGTH,
   HASHTAGS_MAX_COUNT,
+  HASHTAG_REG,
   HashtagErrors,
   CommentErrors,
   ScaleStep,

@@ -22,6 +22,5 @@ const removeComments = () => {
   });
 };
 
-
 export {hideLoadButton, showLoadButton, showModal, hideModal, removeComments};
 

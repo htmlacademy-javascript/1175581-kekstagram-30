@@ -1,4 +1,5 @@
 import { Filters } from '../constants';
+
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderField = document.querySelector('.img-upload__effect-level');
 const effectValueElement = document.querySelector('.effect-level__value');
@@ -40,7 +41,6 @@ const sliderUpdate = ({ EFFECT, UNIT}) => {
     effectValueElement.value = sliderElement.noUiSlider.get();
     previewPhotoElement.style.filter = `${EFFECT}(${effectValueElement.value}${UNIT})`;
   });
-
 };
 
 const sliderUpdateOptions = ({ MIN, MAX, STEP }) => {
@@ -49,7 +49,7 @@ const sliderUpdateOptions = ({ MIN, MAX, STEP }) => {
       min: MIN,
       max: MAX,
     },
-    start: 100,
+    start: MAX,
     step: STEP,
     connect: 'lower',
   });
@@ -66,8 +66,7 @@ const onEffectChange = (evt) => {
     previewPhotoElement.style.filter = 'none';
     sliderElement.classList.add('hidden');
     sliderField.classList.add('hidden');
-  }
-  else {
+  } else {
     sliderElement.classList.remove('hidden');
     sliderField.classList.remove('hidden');
     sliderUpdateOptions(currentEffect);
@@ -75,6 +74,7 @@ const onEffectChange = (evt) => {
     sliderUpdate(currentEffect);
   }
 };
+
 const renderFilters = () => {
   previewMiniList.addEventListener('change', onEffectChange);
 };

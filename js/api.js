@@ -1,4 +1,5 @@
 import { ApiLinks, ErrorMessages } from './constants';
+
 const getData = (onSuccess, getFiltersBlock, onError) => {
   fetch(ApiLinks.GET_LINK)
     .then((response) => {
@@ -12,8 +13,8 @@ const getData = (onSuccess, getFiltersBlock, onError) => {
       onSuccess(photos);
     })
     .catch(() => onError(ErrorMessages.GET_ERROR));
-
 };
+
 const sendData = (onSuccess, onFail, body, blockButton) => {
   fetch(ApiLinks.SEND_LINK,
     {
@@ -23,18 +24,15 @@ const sendData = (onSuccess, onFail, body, blockButton) => {
   ).then((response) => {
     if (response.ok) {
       onSuccess();
-    }
-    else {
+    } else {
       throw new Error(ErrorMessages.SEND_ERROR);
     }
-
   })
     .catch((err) => {
       onFail(err.message);
     })
     .finally(() => blockButton());
 };
-
 
 export { getData, sendData };
 

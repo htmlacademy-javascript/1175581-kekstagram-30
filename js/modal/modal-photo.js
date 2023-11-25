@@ -1,5 +1,6 @@
 import { hideLoadButton, showLoadButton, showModal, hideModal, removeComments } from './modal-helpers.js';
 import { COMMENTS_TO_SHOW } from '../constants.js';
+
 const modalElement = document.querySelector('.big-picture');
 const modalImgElement = modalElement.querySelector('.big-picture__img').querySelector('img');
 const modalShownCommentsElement = modalElement.querySelector('.social__comment-shown-count');
@@ -8,6 +9,7 @@ const commentTemplate = document.querySelector('#comment').content.querySelector
 const commentsFragment = document.createDocumentFragment();
 const closeModalButton = modalElement.querySelector('.big-picture__cancel');
 const loadCommentsButtton = modalElement.querySelector('.social__comments-loader');
+
 let totalCommentsCount = 0;
 let showCommentsCount = 0;
 let showComments = [];
@@ -29,7 +31,6 @@ const renderData = (photoPost) => {
   modalElement.querySelector('.social__comment-total-count').textContent = totalCommentsCount;
   modalElement.querySelector('.social__caption').textContent = photoPost.description;
 };
-
 
 const openModal = () => {
   showModal(modalElement);

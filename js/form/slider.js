@@ -36,14 +36,14 @@ const resetFilters = () => {
   defaultPrewiewElement.checked = true;
 };
 
-const sliderUpdate = ({ EFFECT, UNIT}) => {
+const updateSlider = ({ EFFECT, UNIT}) => {
   sliderElement.noUiSlider.on('update', () => {
     effectValueElement.value = sliderElement.noUiSlider.get();
     previewPhotoElement.style.filter = `${EFFECT}(${effectValueElement.value}${UNIT})`;
   });
 };
 
-const sliderUpdateOptions = ({ MIN, MAX, STEP }) => {
+const updateSliderOptions = ({ MIN, MAX, STEP }) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: MIN,
@@ -69,9 +69,9 @@ const onEffectChange = (evt) => {
   } else {
     sliderElement.classList.remove('hidden');
     sliderField.classList.remove('hidden');
-    sliderUpdateOptions(currentEffect);
+    updateSliderOptions(currentEffect);
     showEffect(currentEffect);
-    sliderUpdate(currentEffect);
+    updateSlider(currentEffect);
   }
 };
 

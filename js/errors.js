@@ -1,5 +1,5 @@
 const errorTemplate = document.querySelector('#data-error').content.querySelector('section');
-const errorElement = errorTemplate.cloneNode('true');
+const errorElement = errorTemplate.cloneNode(true);
 const errorMessageElement = errorElement.querySelector('h2');
 
 const hideError = () => {

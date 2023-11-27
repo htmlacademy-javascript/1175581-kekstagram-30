@@ -84,7 +84,7 @@ function removeEditModalEscListener() {
 
 fileNameInputElement.addEventListener('change', () => onFileInputChange());
 
-const isblockSubmitButton = (param = false) => {
+const isBlockSubmitButton = (param = false) => {
   submitButton.disabled = param;
   if (param) {
     submitButton.textContent = SubmitButtonValues.BLOCK;
@@ -96,7 +96,7 @@ const isblockSubmitButton = (param = false) => {
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   if (isValid()) {
-    isblockSubmitButton(true);
+    isBlockSubmitButton(true);
     sendData(
       () => {
         closeEditModal();
@@ -107,7 +107,7 @@ const onFormSubmit = (evt) => {
       },
       new FormData(evt.target),
       () => {
-        isblockSubmitButton(false);
+        isBlockSubmitButton(false);
       }
     );
   }
